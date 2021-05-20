@@ -1,1 +1,56 @@
-// TODO
+.container{
+  max-width: 1120px;
+  margin: 80px auto;
+}
+
+.posts{
+  margin: 5rem auto;
+
+  a{
+    display: block;
+
+    strong{
+      display: block;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    >span{
+      display: block;
+      margin: 0.57rem 0 1.7rem;
+      color: var(--body);
+      font-size: 1.2rem;
+    }
+
+    div.info{
+      display: flex;
+      span{
+        display: flex;
+        align-items: center;
+        color: var(--info);
+
+        & + span{
+          margin-left: 1.9rem;
+
+        }
+      }
+      svg{
+        margin-right: 0.8rem;
+      }
+    }
+
+    &+ a{
+        margin-top: 3rem;
+    }
+
+  }
+}
+
+.loadMore{
+  margin-top: 4.7rem;
+  font-size: 1.2rem;
+
+  background: none;
+  border: none;
+  color: var(--highlight);
+}
