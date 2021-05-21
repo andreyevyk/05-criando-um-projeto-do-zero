@@ -12,6 +12,8 @@ import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
+import IsPreviewData from '../../components/IsPreviewData';
+import Comments from '../../components/Comments';
 
 interface Post {
   first_publication_date: string | null;
@@ -33,9 +35,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps) {
+export default function Post({ post, preview }: PostProps) {
   const router = useRouter();
   const timeToReading = useMemo(() => {
     const wordsSize: number = post.data.content.reduce(
@@ -89,8 +92,8 @@ export default function Post({ post }: PostProps) {
             />
           </div>
         ))}
-
-        <div />
+        <Comments />
+        <IsPreviewData isPreview={preview} />
       </main>
     </>
   );
@@ -117,10 +120,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params;
-  const prismic = getPrismicClient();
-  const response = await prismic.getByUID('post', String(slug), {});
+  const { preview = false, previewData } = context;
 
+  const prismic = getPrismicClient();
+  const response = await prismic.getByUID('post', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
   return {
-    props: { post: response },
+    props: { post: response, preview },
   };
 };
